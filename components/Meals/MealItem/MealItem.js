@@ -9,11 +9,9 @@ const MealItem=props=>
          <div className={classes.price}>{price}</div>
         </div>
         <div>
-         <MealItemForm></MealItemForm>
+         <MealItemForm id={props.id} item={props}></MealItemForm>
         </div>
-        
-        
-   </li>
+    </li>
 
 }
 export default MealItem

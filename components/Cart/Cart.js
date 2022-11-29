@@ -1,23 +1,33 @@
-import react,{useState} from "react";
+import React,{useContext} from "react";
 import  ReactDOM  from "react-dom";
 import Card from "../UI/Card";
 import classes from './Cart.module.css';
 import Modal from "../UI/Modal";
-
+import CartContext from "../../store/cart-context";
 
 const Cart=props=>
 { 
-   const cartItems=<ul>{[{id:'c1',name:'Sushi',amount:2,price:1299}].map((item)=>
-    <li>{item.name}</li>)}
-    </ul>
-   
-   
-   return (
+  const ctx=useContext(CartContext);
+  let totalamount=0;
+  
+  
+  const cartItems=(<ul className={classes['cart-items']}>
+    { ctx.items.map((item)=>
+    ( 
+     <li>Name:{item.name}     Price:{item.price} Quantity:{item.quantity}</li>
+    ))}
+    </ul> 
+  )
+  ctx.items.forEach(item => {
+    totalamount=Math.round(totalamount+(item.price*item.quantity));
+  });
+
+return (
         <Modal onClose={props.onClose}>
         {cartItems} 
       <div className={classes.total}>
        <span>Total Amount</span>
-       <span>35.62</span>
+       <span>{totalamount}</span>
       </div>
       <div className={classes.actions}>
        <button className={classes['button--alt']} onClick={props.onClose}>Close</button>
